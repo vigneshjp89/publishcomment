@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="https://sitedev.codelessly.com/favicon.ico" class="jsx-1788f26f963801ea">
+  <meta name="next-head-count" content="4"><noscript data-n-css=""></noscript>
+
+  <style type="text/css" data-styled-jsx="">
+    body {
+      margin: 0
+    }
+  </style>
+  <title>Codelessly SDK Web</title>
+</head>
+
+<body>
+  <div id="__next">
+    <div class="jsx-1788f26f963801ea">
+      <div style="max-width: 100%; overflow-x: hidden; width: 100%; height: 100vh;">
+        <div class="rootScale" style="height: 220.12px;transform-origin: left top 0px;transform: scale(3.8);">
+          <div style="width: 361px; height: 220px; position: relative; overflow: hidden; box-sizing: border-box;"
+            class="Canvas 4">
+            <div class=" ">
+              <button class="cl-btnripple-js cl-default-btn-0QTWWLdzwXjCeZPRl7q1"
+                style="width: 100px; height: 30px; position: absolute; left: 26px; top: 161px;"><span
+                  style="font-size: 13px; font-family: Roboto; font-weight: 400; color: white; letter-spacing: 0px; word-break: break-word; width: 69px;">BUTTON</span></button>
+              <style>
+                /* Button */
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1 {
+                  position: relative;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  box-sizing: border-box;
+                  border: none;
+                  border-radius: 85px 85px 85px 85px;
+                  padding: 10px;
+                  background: #5C69E5;
+                  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+                  overflow: hidden;
+                  outline: none;
+                  cursor: pointer;
+                  background-position: center;
+                  transition: background linear 0.5s, box-shadow 0.2s;
+                }
+
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1 i {
+                  font-family: Material Icons;
+                  font-style: normal;
+                  width: 18px;
+                  height: 18px;
+                  font-size: 18px;
+                  line-height: 16px;
+                  text-transform: none;
+                  letter-spacing: normal;
+                  margin-right: 8px;
+                }
+
+                /* text */
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1.text {
+                  color: #5C69E5;
+                  background: transparent;
+                  border: none;
+                  box-shadow: none;
+                }
+
+                /* icon button */
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1.floating {
+                  border-radius: 50%;
+                  width: 56px;
+                  height: 56px;
+                  transition: background linear .5s, box-shadow 280ms linear;
+                }
+
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1.floating>i {
+                  margin-right: 0;
+                  width: 24px;
+                  height: 24px;
+                  font-size: 24px;
+                  line-height: 24px;
+                }
+
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1:hover {
+                  background-color: #5C69E5;
+                }
+
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1.outline:hover {
+                  background-color: #ebe1f9;
+                }
+
+                .cl-default-btn-0QTWWLdzwXjCeZPRl7q1.text:hover {
+                  background-color: #ebe1f9;
+                }
+
+                /* ripple effect style */
+                .material-ink {
+                  position: absolute;
+                  background: #bdc3c7;
+                  border-radius: 50%;
+                  transform: scale(0);
+                  opacity: 0.8;
+                }
+
+                /* animation effect */
+                .material-ink.animate {
+                  animation: ripple 0.6s linear;
+                }
+
+                @keyframes ripple {
+                    0%{
+                        opacity: 0.8;
+                    }
+                  100% {
+                    transform: scale(2.5);
+                    opacity: 0;
+                  }
+                }
+              </style>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+
+  <script>
+    $(".cl-btnripple-js").click(function (e) {
+        let surface = $(this);
+  
+        // create .material-ink element if doesn't exist
+        if (surface.find(".material-ink").length == 0) {
+          surface.prepend("<div class='material-ink'></div>");
+        }
+  
+        var ink = surface.find(".material-ink");
+  
+        // in case of quick double clicks stop the previous animation
+        console.log(ink);
+        
+        ink.removeClass("animate");
+
+        const scaleValue = getbtnScaleValue(surface);
+        //console.log(scaleValue);
+
+        // set size of .ink
+        if (!ink.height() && !ink.width()) {
+          // use surface's width or height whichever is larger for
+          // the diameter to make a circle which can cover the entire element
+          var diameter = Math.max(surface.outerWidth(), surface.outerHeight());
+          ink.css({ height: diameter, width: diameter ,"border-radius": "85px 85px 85px 85px"});
+        }
+        var rect = surface[0].getBoundingClientRect();
+
+        // get click coordinates
+        // Logic:
+        // click coordinates relative to page minus
+        // surface's position relative to page minus
+        // half of self height/width to make it controllable from the center
+  
+        var xPos = (e.pageX - surface.offset().left - rect.width / 2) / scaleValue;
+        var yPos = (ink.height() / 2) - (e.pageY - surface.offset().top) / scaleValue;
+        
+  
+        //set the position and add class .animate
+        ink.css({
+          top: -yPos + 'px',
+          left: xPos + 'px',
+        }).addClass("animate");
+      });
+  
+      function getbtnScaleValue(surface) {
+  
+        // Get the transform value from the clicked element (it is always the same).
+        // const scaleElement = surface[0];
+            const scaleString = surface[0].closest(".rootScale").style.transform;
+            let scaleValue = 1;
+            if (scaleString == "") {
+            return scaleValue;
+            }
+    
+            // This is used to extract the value from scale: "scale(3)" becomes "3".
+            const regex = /(?!scale\()(\d+|\d+\.\d+)(?=\))/g;
+            const regexResult = scaleString.match(regex);
+    
+            // Get the value as a floating number.
+            scaleValue = (regexResult.length > 0) ? parseFloat(regexResult[0]) : 1;
+            //console.log("parse=="+parseFloat(regexArr[0]));
+    
+            // Apply the root zoom, if it exists. 
+            const rootScaledElement = document.getElementsByClassName("rootScale");
+           // console.log("test=="+rootScaledElement[0].style.transform);
+            if (rootScaledElement.length > 0 && rootScaledElement[0].style.transform) {
+            const regexArr = rootScaledElement[0].style.transform.match(regex);
+            
+            if (regexArr.length > 0) {
+                //console.log(Math.round(parseFloat(regexArr[0])));
+                return Math.round(parseFloat(regexArr[0]));
+            }
+            }
+    
+            return scaleValue;
+      }
+      </script>
+</body>
+
+</html>
